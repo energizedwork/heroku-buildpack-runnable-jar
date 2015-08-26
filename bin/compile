@@ -38,6 +38,10 @@ fi
 
 cd $BUILD_DIR
 
+echo "We are here:"
+pwd
+ls -l
+
 . manifest.sh
 
 if [[ -z $HTTP_USER ]] || [[ -z $HTTP_PASSWORD ]] || [[ -z $ARTIFACT_URL ]]; then
