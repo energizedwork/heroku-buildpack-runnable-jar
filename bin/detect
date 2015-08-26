@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # bin/use <build-dir>
 
-if [ -f $1/manifest.sh ]; then
-  echo "Runnable JAR" && exit 0
+echo "Runnable JAR" && exit 0
 
-else
-  echo "no" && exit 1
-fi
+#if [ -f $1/manifest.sh ]; then
+#  echo "Runnable JAR" && exit 0
+#
+#else
+#  echo "no" && exit 1
+#fi
