@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
+startTime=$SECONDS
+
 # fail fast
 set -e
 
@@ -38,18 +40,16 @@ fi
 
 cd $BUILD_DIR
 
-echo "We are here:"
-pwd
-ls -l
-
 . manifest.sh
 
 if [[ -z $HTTP_USER ]] || [[ -z $HTTP_PASSWORD ]] || [[ -z $ARTIFACT_URL ]]; then
-    echo "Must specify HTTP_USER and HTTP_PASSWORD via the environment and ARTIFACT_URL via the manifest file"
+    echo "-----> ERROR: You must specify HTTP_USER and HTTP_PASSWORD via the environment and ARTIFACT_URL via manifest.sh"
     exit 1
 fi
 
-echo "Downloading $ARTIFACT_URL"
+echo "-----> Downloading $ARTIFACT_URL"
 s3location=$(wget -S -q --max-redirect=0 --auth-no-challenge --http-user=$HTTP_USER --http-password=$HTTP_PASSWORD --header 'Accept:application/vnd.snap-ci.com.v1+json' $ARTIFACT_URL 2>&1 | grep Location | sed 's/\s*Location: //g')
-
 wget --header 'Accept:application/vnd.snap-ci.com.v1+json' -O application.jar $s3location
+
+duration=$(( SECONDS - startTime ))
+echo "-----> Finished after $duration seconds"
