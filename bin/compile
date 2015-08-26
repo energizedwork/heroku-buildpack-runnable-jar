@@ -36,30 +36,16 @@ if [ ! -d $CACHE_DIR ] ; then
   mkdir $CACHE_DIR
 fi
 
-export GRADLE_USER_HOME=$CACHE_DIR/.gradle
-
-if [ ! -f $BUILD_DIR/gradlew ] ; then
-  echo "-----> Installing Gradle Wrapper..."
-  echo "       WARNING: Your application does not have it's own gradlew file."
-  echo "       We'll install one for you, but this is a deprecated feature and"
-  echo "       in the future may not be supported."
-  cp -rn ${OPT_DIR}/wrapper/* ${BUILD_DIR}
-fi
-BUILDCMD="./gradlew"
-chmod +x ${BUILD_DIR}/gradlew
-
-BUILDCMD="$BUILDCMD $GRADLE_TASK"
-
 cd $BUILD_DIR
 
-# build app
-echo "-----> Building Gradle app..."
-echo "       WARNING: The Gradle buildpack is currently in Beta."
-echo "-----> executing $BUILDCMD"
+. manifest.sh
 
-$BUILDCMD 2>&1 | sed -u 's/^/       /'
-
-if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-  echo " !     Failed to build app"
-  exit 1
+if [[ -z $HTTP_USER ]] || [[ -z $HTTP_PASSWORD ]] || [[ -z $ARTIFACT_URL ]]; then
+    echo "Must specify HTTP_USER and HTTP_PASSWORD via the environment and ARTIFACT_URL via the manifest file"
+    exit 1
 fi
+
+echo "Downloading $ARTIFACT_URL"
+s3location=$(wget -S -q --max-redirect=0 --auth-no-challenge --http-user=$HTTP_USER --http-password=$HTTP_PASSWORD --header 'Accept:application/vnd.snap-ci.com.v1+json' $ARTIFACT_URL 2>&1 | grep Location | sed 's/\s*Location: //g')
+
+wget --header 'Accept:application/vnd.snap-ci.com.v1+json' -O application.jar $s3location
