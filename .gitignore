@@ -1,2 +1,5 @@
 .idea/
 heroku-buildback-runnable-jar.i*
+
+manifest.sh
+**/manifest.sh
