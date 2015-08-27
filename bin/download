@@ -18,7 +18,7 @@ function github_releases_download {
             exit 1
     fi
 
-    wget -q --header 'Accept:application/octet-stream' -O application.jar "${ARTIFACT_URL}?access_token=${ACCESS_TOKEN}"
+    wget --header 'Accept:application/octet-stream' -O application.jar "${ARTIFACT_URL}?access_token=${ACCESS_TOKEN}"
 }
 
 function generic_download {
