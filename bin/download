@@ -25,18 +25,17 @@ function generic_download {
     wget -q -O application.jar $ARTIFACT_URL
 }
 
-echo "-----> Downloading $ARTIFACT_URL"
 case $DOWNLOAD_FROM in
     github-releases)
-      echo "Downloading from Github release"
+      echo "-----> Downloading $ARTIFACT_URL from Github release"
       github_releases_download
       ;;
     snap)
-      echo "Downloading from Snap CI"
+      echo "-----> Downloading $ARTIFACT_URL from Snap CI"
       snap_download
       ;;
     *)
-      echo "Downloading from URL"
+      echo "-----> Downloading $ARTIFACT_URL"
       generic_download
       ;;
 esac
