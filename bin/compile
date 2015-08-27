@@ -40,7 +40,7 @@ fi
 
 cd $BUILD_DIR
 
-./download
+$BIN_DIR/download
 
 duration=$(( SECONDS - startTime ))
 echo "-----> Finished after $duration seconds"
