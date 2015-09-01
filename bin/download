@@ -13,12 +13,12 @@ function snap_download {
 }
 
 function github_releases_download {
-    if [[ -z $ACCESS_TOKEN ]] || [[ -z $ARTIFACT_URL ]]; then
-            echo "-----> ERROR: You must specify ACCESS_TOKEN via the environment and ARTIFACT_URL via manifest.sh"
+    if [[ -z $GITHUB_ACCESS_TOKEN ]] || [[ -z $ARTIFACT_URL ]]; then
+            echo "-----> ERROR: You must specify GITHUB_ACCESS_TOKEN via the environment and ARTIFACT_URL via manifest.sh"
             exit 1
     fi
 
-    wget --header 'Accept:application/octet-stream' -O application.jar "${ARTIFACT_URL}?access_token=${ACCESS_TOKEN}"
+    wget --header 'Accept:application/octet-stream' -O application.jar "${ARTIFACT_URL}?ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}"
 }
 
 function generic_download {
