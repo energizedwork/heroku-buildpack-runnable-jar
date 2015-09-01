@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ ! -f application.jar ]; then
+    echo "Couldn't find application.jar"
+    exit 1
+fi
+
+java $JAVA_OPTS -jar application.jar pre-deploy

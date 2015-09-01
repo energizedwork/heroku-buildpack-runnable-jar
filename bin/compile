@@ -41,6 +41,7 @@ fi
 cd $BUILD_DIR
 
 $BIN_DIR/download
+$BIN_DIR/pre-deploy
 
 duration=$(( SECONDS - startTime ))
 echo "-----> Finished after $duration seconds"
