@@ -5,5 +5,5 @@ if [ -f $1/manifest.sh ]; then
   echo "Runnable JAR" && exit 0
 
 else
-  echo "no" && exit 1
+  >&2 echo "manifest.sh could not be found" && exit 1
 fi
