@@ -36,7 +36,7 @@ The following files can be used to control behaviour of the buildpack when pushi
 | --- | --- | --- |
 | `manifest.sh` | Yes | A shell script that should set `ARTIFACT_URL` variable to a url from which the runnable jar being deployed is to be downloaded from. |
 | `Procfile` | Yes | A regular [Heroku Procfile](https://devcenter.heroku.com/articles/procfile). Note that the jar is stored as `application.jar` after downloading regardless of the file name used in `ARTIFACT_URL` variable set by `manifest.sh` file. |
-| `system.properties` | No | Can be used to specify the JVM version to be used as per [these instructions](https://devcenter.heroku.com/articles/java-support#specifying-a-java-version). The latest JVM version avialble in heroku will be used by default. |
+| `system.properties` | No | Can be used to specify the JVM version as per [these instructions](https://devcenter.heroku.com/articles/java-support#specifying-a-java-version). The latest JVM version avialable in Heroku will be used if this file does not exist. |
 
 **Note:** You don't have to create any of the above files if you are using [Heroku Buildpack Runnable Jar Gradle plugin](https://github.com/energizedwork/heroku-buildpack-runnable-jar-gradle-plugin) as it will do this for you based on how you configure it.
 
