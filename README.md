@@ -51,3 +51,4 @@ The following [config vars](https://devcenter.heroku.com/articles/config-vars) c
 | `HTTP_PASSWORD` | User to be used with basic HTTP authentication when `DOWNLOAD_FROM` is set to `snap`. |
 | `GITHUB_ACCESS_TOKEN` | GitHub access token to be used when `DOWNLOAD_FROM` is set to `github-releases`. |
 | `NO_PRE_DEPLOY` | Set this var to `true` if you wish to skip the pre-deployment step where application is called with `pre-deployment` passed as the first argument. |
+| `UNZIP_ARTIFACT` | Set this var to `true` if you wish to unzip the downloaded artifact. If this config var is set then the artifact is downloaded as `application.zip` and unzipped in-place. |

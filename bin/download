@@ -2,6 +2,12 @@
 
 . manifest.sh
 
+if [[ -z $UNZIP_ARTIFACT ]]; then
+    ARTIFACT_NAME=application.jar
+else
+    ARTIFACT_NAME=application.zip
+fi
+
 function snap_download {
     if [[ -z $HTTP_USER ]] || [[ -z $HTTP_PASSWORD ]] || [[ -z $ARTIFACT_URL ]]; then
         echo "-----> ERROR: You must specify HTTP_USER and HTTP_PASSWORD via the environment and ARTIFACT_URL via manifest.sh"
@@ -9,7 +15,7 @@ function snap_download {
     fi
 
     s3location=$(wget -S -q --max-redirect=0 --auth-no-challenge --http-user=$HTTP_USER --http-password=$HTTP_PASSWORD --header 'Accept:application/vnd.snap-ci.com.v1+json' $ARTIFACT_URL 2>&1 | grep Location | sed 's/\s*Location: //g')
-    wget -q --header 'Accept:application/vnd.snap-ci.com.v1+json' -O application.jar $s3location
+    wget -q --header 'Accept:application/vnd.snap-ci.com.v1+json' -O $ARTIFACT_NAME $s3location
 }
 
 function github_releases_download {
@@ -18,11 +24,11 @@ function github_releases_download {
             exit 1
     fi
 
-    wget --header 'Accept:application/octet-stream' -O application.jar "${ARTIFACT_URL}?access_token=${GITHUB_ACCESS_TOKEN}"
+    wget --header 'Accept:application/octet-stream' -O $ARTIFACT_NAME "${ARTIFACT_URL}?access_token=${GITHUB_ACCESS_TOKEN}"
 }
 
 function generic_download {
-    wget -q -O application.jar $ARTIFACT_URL
+    wget -q -O $ARTIFACT_NAME $ARTIFACT_URL
 }
 
 case $DOWNLOAD_FROM in
@@ -39,3 +45,7 @@ case $DOWNLOAD_FROM in
       generic_download
       ;;
 esac
+
+if [[ -n $UNZIP_ARTIFACT ]]; then
+    unzip $ARTIFACT_NAME
+fi
