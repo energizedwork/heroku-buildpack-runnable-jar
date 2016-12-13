@@ -31,7 +31,7 @@ function generic_download {
     wget -q -O $ARTIFACT_NAME $ARTIFACT_URL
 }
 
-if [[ -z $ARTIFACT_URL ]]; then
+if [[ -n $ARTIFACT_URL ]]; then
     case $DOWNLOAD_FROM in
         github-releases)
           echo "-----> Downloading $ARTIFACT_URL from Github release"
