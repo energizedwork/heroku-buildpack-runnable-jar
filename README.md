@@ -34,9 +34,11 @@ The following files can be used to control behaviour of the buildpack when pushi
 
 | Path | Required | Description |
 | --- | --- | --- |
-| `manifest.sh` | Yes | A shell script that should set `ARTIFACT_URL` variable to a url from which the runnable jar being deployed is to be downloaded from. |
+| `manifest.sh` | Yes | A shell script that can set `ARTIFACT_URL` variable to a url from which the runnable jar being deployed is to be downloaded from. If the variable is not set no download will be performed which is useful when the artifact is included with the deployment files. |
 | `Procfile` | Yes | A regular [Heroku Procfile](https://devcenter.heroku.com/articles/procfile). Note that the jar is stored as `application.jar` after downloading regardless of the file name used in `ARTIFACT_URL` variable set by `manifest.sh` file. |
 | `system.properties` | No | Can be used to specify the JVM version as per [these instructions](https://devcenter.heroku.com/articles/java-support#specifying-a-java-version). The latest JVM version avialable in Heroku will be used if this file does not exist. |
+| `application.jar` | No | If you wish not to download the artifact but include it in the pushed git repository then you can include it as `application.jar` and not set `ARTIFACT_URL` variable in `manifest.sh`. |
+| `application.zip` | No | If you wish not to download the artifact that should be unzipped but include it in the pushed git repository then you can include it as `application.jar` and not set `ARTIFACT_URL` variable in `manifest.sh`. |
 
 **Note:** You don't have to create any of the above files if you are using [Heroku Buildpack Runnable Jar Gradle plugin](https://github.com/energizedwork/heroku-buildpack-runnable-jar-gradle-plugin) as it will do this for you based on how you configure it.
 

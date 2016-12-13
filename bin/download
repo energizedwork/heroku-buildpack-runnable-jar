@@ -31,20 +31,22 @@ function generic_download {
     wget -q -O $ARTIFACT_NAME $ARTIFACT_URL
 }
 
-case $DOWNLOAD_FROM in
-    github-releases)
-      echo "-----> Downloading $ARTIFACT_URL from Github release"
-      github_releases_download
-      ;;
-    snap)
-      echo "-----> Downloading $ARTIFACT_URL from Snap CI"
-      snap_download
-      ;;
-    *)
-      echo "-----> Downloading $ARTIFACT_URL"
-      generic_download
-      ;;
-esac
+if [[ -z $ARTIFACT_URL ]]; then
+    case $DOWNLOAD_FROM in
+        github-releases)
+          echo "-----> Downloading $ARTIFACT_URL from Github release"
+          github_releases_download
+          ;;
+        snap)
+          echo "-----> Downloading $ARTIFACT_URL from Snap CI"
+          snap_download
+          ;;
+        *)
+          echo "-----> Downloading $ARTIFACT_URL"
+          generic_download
+          ;;
+    esac
+fi
 
 if [[ -n $UNZIP_ARTIFACT ]]; then
     unzip $ARTIFACT_NAME
